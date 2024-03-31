@@ -60,6 +60,18 @@ Classes inherited from Base Model:
 * `def new(self, obj)` - sets in __objects the obj with key <obj class name>.id
 * `def save(self)` - serializes __objects to the JSON file (path: __file_path)
 * ` def reload(self)` -  deserializes the JSON file to __objects
+* ` def get(self, cls, id)` -  retrieves one object based on the class and its ID
+* ` def count(self, cls=None)` -  counts the number of objects in storage
+
+#### `api/` directory contains the API:
+[app.py](/api/v1/app.py) - creates a Flask application instance and handles API routes and requests. Registers blueprints, sets up teardown functions, and runs the Flask server.
+[index.py](/api/v1/views/index.py) - defines routes and endpoints for the API version 1. Imports blueprints from other modules to set up routes.
+[states.py](/api/v1/views/states.py) - serves as the controller for state-related functionality within the API, defining routes and handling HTTP requests, interacting with the storage layer, validating data, and serializing responses
+[cities.py](/api/v1/views/cities.py) - defines routes and handlers for CRUD operations on City objects within the API, including retrieving a list of cities for a given state, retrieving, creating, updating, and deleting individual city objects, while ensuring appropriate error handling, data validation, and serialization of responses using to_dict()
+[amenities.py](/api/v1/views/amenities.py) - serves as the controller for Amenity-related functionality within the API, defining routes and handling HTTP requests for CRUD operations on Amenity objects. It ensures proper error handling, data validation, and serialization of responses using to_dict().
+[users.py](/api/v1/views/users.py) - serves as the controller for User-related functionality within the API, defining routes and handling HTTP requests for CRUD operations on User objects. It ensures proper error handling, data validation, and serialization of responses
+[places.py](/api/v1/views/places.py) - serves as the controller for Place-related functionality within the API, defining routes and handling HTTP requests for CRUD operations on User objects. It ensures proper error handling, data validation, and serialization of responses
+[reviews.py](/api/v1/views/reviews.py) - serves as the controller for Review-related functionality within the API, defining routes and handling HTTP requests for CRUD operations on User objects. It ensures proper error handling, data validation, and serialization of responses
 
 #### `/tests` directory contains all unit test cases for this project:
 [/test_models/test_base_model.py](/tests/test_models/test_base_model.py) - Contains the TestBaseModel and TestBaseModelDocs classes
@@ -156,6 +168,9 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Nuru Ahmed - [Github](https://github.com/0xNuru) / [Twitter](https://x.com/0xNuru)
+Bukky Pase - [Github](https://github.com/pasebukky) / [Twitter](https://x.com/bukkypase)
+
 
 Second part of Airbnb: Joann Vuong
 ## License
