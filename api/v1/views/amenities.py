@@ -46,10 +46,8 @@ def create_amenity():
     json_amenity = request.get_json()
     if json_amenity is None:
         abort(400, 'Not a JSON')
-    if "name" not in json_amenity:
-        abort(400, 'Missing name')
-    if len(json_amenity) != 1:
-        abort(400)
+    if 'name' not in request.get_json:
+        abort(400, description="Missing name")
     new_amenity = Amenity(**json_amenity)
     storage.new(new_amenity)
     storage.save()
