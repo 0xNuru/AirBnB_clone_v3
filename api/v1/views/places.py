@@ -17,7 +17,7 @@ from models.user import User
 def get_all_places(city_id):
     """ Retrieves the list of all Place objects of a City """
     list_of_places = []
-    city = storage.get("City", city_id)
+    city = storage.get("City", str(city_id))
     if city is None:
         abort(404)
     for place in city.places:
@@ -56,7 +56,7 @@ def create_place(city_id):
     if not storage.get("User", json_place["user_id"]):
         abort(404, description='User not found')
     if not storage.get("City", city_id):
-        abort(404, description='City not found')
+        abort(404)
     if "user_id" not in json_place:
         abort(400, description='Missing user_id')
     if "name" not in json_place:
