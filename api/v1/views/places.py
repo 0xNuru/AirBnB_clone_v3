@@ -57,8 +57,6 @@ def create_place(city_id):
         abort(400, description='Missing user_id')
     if "name" not in json_place:
         abort(400, description='Missing name')
-    if len(json_place) != 3:
-        abort(400)
     json_place["city_id"] = city_id
     new_place = Place(**json_place)
     storage.new(new_place)
