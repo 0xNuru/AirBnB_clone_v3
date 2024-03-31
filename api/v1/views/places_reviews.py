@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ View for Review objects that handles all default RESTFul API actions """
 
 from flask import jsonify
@@ -16,7 +17,9 @@ def get_all_reviews_by_place(place_id):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    reviews = [review.to_dict() for review in place.reviews]
+    reviews = []
+    for review in place.reviews:
+        reviews.append(review.to_dict())
     return jsonify(reviews)
 
 
@@ -77,8 +80,7 @@ def update_review(review_id):
     if not json_review:
         abort(400, description='Not a JSON')
     for key, value in json_review.items():
-        if key not in ('id', 'user_id', 'place_id', 'created_at',
-                       'updated_at'):
+        if key not in ('id', 'user_id', 'place_id', 'created_at', 'updated_at'):
             setattr(review, key, value)
     storage.save()
     return jsonify(review.to_dict()), 200
