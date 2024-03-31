@@ -20,7 +20,7 @@ def get_all_states():
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
 def get_state_by_id(state_id):
-    """ Retrieves the list of States by ID """
+    """ Retrieves a State object by ID """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -30,7 +30,7 @@ def get_state_by_id(state_id):
 @app_views.route('/states/<state_id>', methods=['DELETE'],
                  strict_slashes=False)
 def delete_state_by_id(state_id):
-    """ Deletes the list of States by ID """
+    """ Deletes a State object by ID """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -41,11 +41,11 @@ def delete_state_by_id(state_id):
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
-    """ Creates a state """
+    """ Creates a new State """
     json_state = request.get_json()
-    if json_state is None:
+    if not json_state:
         abort(400, 'Not a JSON')
-    if "name" not in json_state:
+    if 'name' not in json_state:
         abort(400, 'Missing name')
     new_state = State(**json_state)
     storage.new(new_state)
@@ -55,12 +55,12 @@ def create_state():
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
 def update_state_by_id(state_id):
-    """ Updates a state object """
+    """ Updates a State object by ID """
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
     json_state = request.get_json()
-    if json_state is None:
+    if not json_state:
         abort(400, 'Not a JSON')
     for key, value in json_state.items():
         if key not in ('id', 'created_at', 'updated_at'):
