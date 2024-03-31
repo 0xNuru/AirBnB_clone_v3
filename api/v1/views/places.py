@@ -12,6 +12,8 @@ def get_all_places(city_id):
     """ Retrieves the list of all Place objects of a City """
     list_of_places = []
     city = storage.get("City", city_id)
+    if city is None:
+        abort(404)
     for place in city.places:
         list_of_places.append(place.to_dict())
     return jsonify(list_of_places)
@@ -42,7 +44,7 @@ def delete_place(place_id):
                  strict_slashes=False)
 def create_place(city_id):
     """ Creates a Place """
-    json_place = request.get_json
+    json_place = request.get_json()
     if json_place is None:
         abort(400, 'Not a JSON')
     if not storage.get("User", json_place["user_id"]):
@@ -54,7 +56,7 @@ def create_place(city_id):
     if "name" not in json_place:
         abort(400, 'Missing name')
     json_place["city_id"] = city_id
-    new_place = Place(**json_data)
+    new_place = Place(**json_place)
     storage.new(new_place)
     storage.save()
     return jsonify(new_place.to_dict()), 201
