@@ -7,6 +7,7 @@ from flask import request
 from api.v1.views import app_views, storage
 from models.city import City
 from models.place import Place
+from models.state import State
 
 
 @app_views.route('/cities/<city_id>/places', methods=['GET'],
