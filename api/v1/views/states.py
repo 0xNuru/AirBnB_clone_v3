@@ -6,6 +6,7 @@ from flask import abort
 from flask import request
 from api.v1.views import app_views, storage
 from models.state import State
+import uuid
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
@@ -47,6 +48,8 @@ def create_state():
         abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
         abort(400, description="Missing name")
+    state_id = str(uuid.uuid4())
+    json_state['id'] = state_id
     new_state = State(**json_state)
     storage.new(new_state)
     storage.save()
