@@ -2,6 +2,7 @@
 """create a flask web application API"""
 from flask import Flask
 from flask import jsonify
+from flask_cors import CORS
 from os import getenv
 from models import storage
 from api.v1.views import app_views
@@ -13,6 +14,7 @@ port = int(getenv('HBNB_API_PORT', '5000'))
 
 app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
+CORS(app, resources={'/*': {'origins': host}})
 
 
 @app.teardown_appcontext
