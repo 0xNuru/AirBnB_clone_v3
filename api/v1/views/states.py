@@ -4,6 +4,7 @@
 from flask import jsonify
 from flask import abort
 from flask import request
+from flask import make_response
 from api.v1.views import app_views, storage
 from models.state import State
 
@@ -34,7 +35,7 @@ def delete_state_by_id(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    state.delete()
+    storage.delete(state)
     storage.save()
     return jsonify({}), 200
 
@@ -44,9 +45,9 @@ def create_state():
     """ Creates a new State """
     json_state = request.get_json()
     if not json_state:
-        abort(400, 'Not a JSON')
+        return make_response(jsonify({"error": "Not a JSON"}), 400)
     if 'name' not in request.get_json():
-        abort(400, description="Missing name")
+        return make_response(jsonify({"error": "Missing name"}), 400)
     new_state = State(**json_state)
     storage.new(new_state)
     storage.save()
