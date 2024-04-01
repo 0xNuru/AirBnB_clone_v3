@@ -4,7 +4,6 @@
 from flask import jsonify
 from flask import abort
 from flask import request
-from flask import make_response
 from api.v1.views import app_views, storage
 from models.state import State
 
@@ -45,9 +44,9 @@ def create_state():
     """ Creates a new State """
     json_state = request.get_json()
     if not json_state:
-        return make_response(jsonify({"error": "Not a JSON"}), 400)
+        abort(400, 'Not a JSON')
     if 'name' not in request.get_json():
-        return make_response(jsonify({"error": "Missing name"}), 400)
+        abort(400, description="Missing name")
     new_state = State(**json_state)
     storage.new(new_state)
     storage.save()
