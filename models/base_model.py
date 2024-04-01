@@ -21,6 +21,8 @@ else:
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
+    include_password = False
+
     if models.storage_t == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, default=datetime.utcnow)
@@ -68,6 +70,8 @@ class BaseModel:
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
+        if not BaseModel.include_password:
+            new_dict.pop('password', None)
         return new_dict
 
     def delete(self):
